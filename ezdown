@@ -224,7 +224,7 @@ EOF
 {
   "exec-opts": ["native.cgroupdriver=$CGROUP_DRIVER"],
   "registry-mirrors": [
-    "https://nexus.dev.niuchart.com/repository/docker-group",
+    "https://nexus.dev.niuchart.com/docker-group",
     "https://docker.1ms.run",
     "https://hub1.nat.tf",
     "https://docker.1panel.live",
