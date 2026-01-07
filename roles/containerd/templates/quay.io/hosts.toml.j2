@@ -1,0 +1,10 @@
+#https://github.com/containerd/containerd/blob/main/docs/hosts.md
+server = "https://quay.io"
+
+# 配置镜像从国内镜像源拉取
+[host."https://nexus.dev.niuchart.com/repository/docker-group"]
+  capabilities = ["pull", "resolve"]
+
+[host."https://quay.io"]
+  capabilities = ["pull", "resolve"]
+

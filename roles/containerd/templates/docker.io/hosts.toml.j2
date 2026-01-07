@@ -3,6 +3,9 @@ server = "https://docker.io"
 
 # 在网站查看当前可用的国内docker 镜像加速仓库
 # https://status.1panel.top/status/docker
+[host."https://nexus.dev.niuchart.com/repository/docker-group"]
+  capabilities = ["pull", "resolve"]
+
 [host."https://docker.1ms.run"]
   capabilities = ["pull", "resolve"]
 

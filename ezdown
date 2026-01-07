@@ -34,6 +34,8 @@ dnsNodeCacheVer=1.26.4
 # https://github.com/kubernetes-sigs/metrics-server
 metricsVer=v0.8.0
 pauseVer=3.10
+# https://github.com/rook/rook
+rookCephVer=release-1.18
 
 # images not downloaded by default(only download  with 'ezdown -X ***')
 # https://github.com/cilium/cilium
@@ -222,6 +224,7 @@ EOF
 {
   "exec-opts": ["native.cgroupdriver=$CGROUP_DRIVER"],
   "registry-mirrors": [
+    "https://nexus.dev.niuchart.com/repository/docker-group",
     "https://docker.1ms.run",
     "https://hub1.nat.tf",
     "https://docker.1panel.live",
@@ -346,6 +349,7 @@ function get_default_images() {
       "easzlab/k8s-dns-node-cache:$dnsNodeCacheVer" \
       "easzlab/metrics-server:$metricsVer" \
       "easzlab/pause:$pauseVer" \
+      "rook/ceph:$rookCephVer" \
     )
   down_and_save_images
 }

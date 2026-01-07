@@ -6,6 +6,9 @@
   - "/etc/containerd/certs.d/docker.io"
   - "/etc/containerd/certs.d/easzlab.io.local:5000"
   - "/etc/containerd/certs.d/{{ HARBOR_REGISTRY }}"
+  - "/etc/containerd/certs.d/quay.io"
+  - "/etc/containerd/certs.d/registry.k8s.io"
+  - "/etc/containerd/certs.d/gcr.io"
   tags: support_private_registry
 
 - name: 准备INSECURE REGISTRY 目录
@@ -39,6 +42,15 @@
 
 - name: 配置docker.io 加速镜像
   template: src=docker.io/hosts.toml.j2 dest=/etc/containerd/certs.d/docker.io/hosts.toml
+
+- name: 配置quay.io镜像源
+  template: src=quay.io/hosts.toml.j2 dest=/etc/containerd/certs.d/quay.io/hosts.toml
+
+- name: 配置registry.k8s.io镜像源
+  template: src=registry.k8s.io/hosts.toml.j2 dest=/etc/containerd/certs.d/registry.k8s.io/hosts.toml
+
+- name: 配置gcr.io镜像源
+  template: src=gcr.io/hosts.toml.j2 dest=/etc/containerd/certs.d/gcr.io/hosts.toml
 
 - name: 配置信任 INSECURE REGISTRY 仓库
   template:
