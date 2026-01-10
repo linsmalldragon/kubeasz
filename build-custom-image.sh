@@ -2,7 +2,7 @@
 set -e
 
 # Custom image name
-IMAGE_NAME="nexus.dev.niuchart.com/docker-hosted/easzlab/kubeasz:3.6.8-fork1"
+IMAGE_NAME="nexus.dev.niuchart.com/docker-hosted/easzlab/kubeasz:3.6.8-fork2"
 
 echo "Building and pushing custom image: $IMAGE_NAME"
 # Use docker buildx for multi-arch support
