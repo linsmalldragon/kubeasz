@@ -16,6 +16,7 @@ set -o pipefail
 # default settings, can be overridden by cmd line options, see usage
 DOCKER_VER=28.0.4
 KUBEASZ_VER=3.6.8
+KUBEASZ_IMAGE="docker.dev.niuchart.com:8082/easzlab/kubeasz:${KUBEASZ_VER}-custom"
 K8S_BIN_VER=v1.34.1
 # https://github.com/easzlab/dockerfile-kubeasz-ext-bin
 EXT_BIN_VER=1.13.0
@@ -277,8 +278,8 @@ function get_kubeasz() {
 
   if [[ ! -f "$imageDir/kubeasz_$KUBEASZ_VER.tar" ]];then
     logger info "downloading kubeasz: $KUBEASZ_VER"
-    docker pull "easzlab/kubeasz:$KUBEASZ_VER" && \
-    docker save -o "$imageDir/kubeasz_$KUBEASZ_VER.tar" "easzlab/kubeasz:$KUBEASZ_VER" || \
+    docker pull "$KUBEASZ_IMAGE" && \
+    docker save -o "$imageDir/kubeasz_$KUBEASZ_VER.tar" "$KUBEASZ_IMAGE" || \
     { logger error "download failed!"; return 1; }
   else
     docker load -i "$imageDir/kubeasz_$KUBEASZ_VER.tar"
@@ -286,7 +287,7 @@ function get_kubeasz() {
 
   docker ps -a |grep -q temp_easz && { logger debug "remove existing container"; docker rm -f temp_easz; }
   logger debug " run a temporary container"
-  docker run -d --name temp_easz easzlab/kubeasz:${KUBEASZ_VER} || { logger error "failed."; exit 1; }
+  docker run -d --name temp_easz "$KUBEASZ_IMAGE" || { logger error "failed."; exit 1; }
 
   [[ -d "$BASE/down" ]] && /bin/mv -f "$BASE/down" /tmp
   [[ -d "$BASE/bin" ]] && /bin/mv -f "$BASE/bin" /tmp
@@ -641,8 +642,8 @@ function start_kubeasz_docker() {
 
   if [[ ! -f "$imageDir/kubeasz_$KUBEASZ_VER.tar" ]];then
     logger info "downloading kubeasz: $KUBEASZ_VER"
-    docker pull "easzlab/kubeasz:$KUBEASZ_VER" && \
-    docker save -o "$imageDir/kubeasz_$KUBEASZ_VER.tar" "easzlab/kubeasz:$KUBEASZ_VER"
+    docker pull "$KUBEASZ_IMAGE" && \
+    docker save -o "$imageDir/kubeasz_$KUBEASZ_VER.tar" "$KUBEASZ_IMAGE"
   else
     docker load -i "$imageDir/kubeasz_$KUBEASZ_VER.tar"
   fi
@@ -671,7 +672,7 @@ function start_kubeasz_docker() {
       --volume /root/.kube:/root/.kube \
       --volume /root/.ssh:/root/.ssh \
       --volume /etc/docker:/etc/docker \
-      easzlab/kubeasz:${KUBEASZ_VER}
+      "$KUBEASZ_IMAGE"
 }
 
 function clean_container() {

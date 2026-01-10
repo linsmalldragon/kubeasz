@@ -1,0 +1,4 @@
+FROM easzlab/kubeasz:3.6.8
+
+# Copy local files (likely containing custom configs) to /etc/kubeasz
+COPY . /etc/kubeasz
