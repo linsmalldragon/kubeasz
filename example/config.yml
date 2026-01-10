@@ -8,7 +8,6 @@ INSTALL_SOURCE: "online"
 # (deprecated) 未更新上游项目，未验证最新k8s集群安装，不建议启用
 OS_HARDEN: false
 
-
 ############################
 # role:deploy
 ############################
@@ -32,14 +31,13 @@ K8S_VER: "__k8s_ver__"
 # and must start and end with an alphanumeric character (e.g. 'example.com'),
 # regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
 K8S_NODENAME: "{%- if k8s_nodename != '' -%} \
-                    {{ k8s_nodename|replace('_', '-')|lower }} \
-               {%- else -%} \
-                    k8s-{{ inventory_hostname|replace('.', '-') }} \
-               {%- endif -%}"
+  {{ k8s_nodename|replace('_', '-')|lower }} \
+  {%- else -%} \
+  k8s-{{ inventory_hostname|replace('.', '-') }} \
+  {%- endif -%}"
 
 # use 'K8S_NODENAME' to set hostname
 ENABLE_SETTING_HOSTNAME: true
-
 
 ############################
 # role:etcd
@@ -47,7 +45,6 @@ ENABLE_SETTING_HOSTNAME: true
 # 设置不同的wal目录，可以避免磁盘io竞争，提高性能
 ETCD_DATA_DIR: "/var/lib/etcd"
 ETCD_WAL_DIR: ""
-
 
 ############################
 # role:runtime [containerd,docker]
@@ -72,7 +69,6 @@ DOCKER_STORAGE_DIR: "/var/lib/docker"
 
 # [docker]开启Restful API
 DOCKER_ENABLE_REMOTE_API: false
-
 
 ############################
 # role:kube-master
@@ -110,7 +106,6 @@ KUBE_RESERVED_ENABLED: "no"
 # 另外，集群安装时候apiserver等资源占用会短时较大，建议至少预留1g内存
 SYS_RESERVED_ENABLED: "no"
 
-
 ############################
 # role:network [flannel,calico,cilium,kube-ovn,kube-router]
 ############################
@@ -119,7 +114,7 @@ SYS_RESERVED_ENABLED: "no"
 FLANNEL_BACKEND: "vxlan"
 DIRECT_ROUTING: false
 
-# [flannel] 
+# [flannel]
 flannel_ver: "__flannel__"
 
 # ------------------------------------------- calico
@@ -139,7 +134,7 @@ CALICO_NETWORKING_BACKEND: "bird"
 # 如果集群规模超过50个节点，建议启用该特性
 CALICO_RR_ENABLED: false
 
-# CALICO_RR_NODES 配置route reflectors的节点，如果未设置默认使用集群master节点 
+# CALICO_RR_NODES 配置route reflectors的节点，如果未设置默认使用集群master节点
 # CALICO_RR_NODES: ["192.168.1.1", "192.168.1.2"]
 CALICO_RR_NODES: []
 
@@ -169,7 +164,6 @@ FIREWALL_ENABLE: true
 
 # [kube-router]kube-router 镜像版本
 kube_router_ver: "__kube_router__"
-
 
 ############################
 # role:cluster-addon
@@ -252,7 +246,7 @@ rocketmq_namespace: "rocketmq"
 rocketmq_storage_class: "{{ openebs_lvm_storage_class }}"
 
 # network-check 自动安装
-network_check_enabled: false 
+network_check_enabled: false
 network_check_schedule: "*/5 * * * *"
 
 # kubeblocks 自动安装
@@ -264,8 +258,7 @@ kubeblocks_install: "no"
 ingress_nginx_install: "no"
 ingress_nginx_namespace: "ingress-nginx"
 ingress_nginx_ver: "__ingress_nginx_ver__"
-ingress_nginx_metrics_enabled: true  # 需要先部署prometheus
-
+ingress_nginx_metrics_enabled: true # 需要先部署prometheus
 
 ############################
 # role:harbor
